@@ -122,7 +122,7 @@ def train(args, train_loader, model, criterion, optimizer, epoch):
         # print(f"input {input.device}, model {model.device}")
         output = model(input)
         output = (resize(output[0],[512, 1024]), resize(output[1],[512, 1024]))
-        target=target.cuda()
+        # target=target.cuda()
         optimizer.zero_grad()
 
         focal_loss,tversky_loss,loss = criterion(output,target)
