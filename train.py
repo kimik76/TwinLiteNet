@@ -1,7 +1,9 @@
 import os
 import sys 
 # put the directory efficientvit instead of '..'
-sys.path.insert(1, os.path.join(sys.path[0], '/kaggle/working/efficientvit'))
+sys.path.insert(1, os.path.join(sys.path[0], "../efficientvit"))
+from efficientvit.models.utils import build_kwargs_from_config
+from efficientvit.models.efficientvit.seg import SegHead
 ######
 import torch
 import pickle
@@ -19,7 +21,19 @@ from torchvision.transforms import transforms as T
 from efficientvit.seg_model_zoo import create_seg_model
 
 from loss import TotalLoss
-
+head = SegHead(
+            fid_list=["stage4", "stage3", "stage2"],
+            in_channel_list=[128, 64, 32],
+            stride_list=[64, 32, 16, 8],
+            head_stride=4,
+            head_width=32,
+            head_depth=1,
+            expand_ratio=4,
+            middle_op="mbconv",
+            final_expand=4,
+            n_classes=2,
+#             **build_kwargs_from_config(kwargs, SegHead),
+        )
 def train_net(args):
     # load the model
     cuda_available = torch.cuda.is_available()
@@ -58,17 +72,15 @@ def train_net(args):
         args.onGPU = True
         model = model.cuda()
         cudnn.benchmark = True
-    for param in model.parameters():
-        
-    param.requires_grad = False
-    total_paramters = netParams(model)
+    # for param in model.parameters():
+    #
+    #     param.requires_grad = False
+    #     total_paramters = netParams(model)
+    #
+    # for param in model.head2.parameters():
+    #     param.requires_grad = True
 
-    for param in model.head2.parameters():
-    param.requires_grad = True
-    
-    print('Total network parameters: ' + str(total_paramters))
-    
-    criteria = TotalLoss()
+    # print('Total network parameters: ' + str(total_paramters))
 
     start_epoch = 0
     lr = args.lr
@@ -98,6 +110,14 @@ def train_net(args):
 
         # train for one epoch
         model.train()
+
+        model.head1 = head
+        model.head2 = head
+        for param in model.backbone.parameters():
+            param.requires_grad = False
+
+        criteria = TotalLoss()
+
         train( args, trainLoader, model, criteria, optimizer, epoch)
         # model.eval()
         # # validation
