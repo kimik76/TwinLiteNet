@@ -116,7 +116,7 @@ def train_net(args):
         # for param in model.backbone.parameters():
         #     param.requires_grad = False
 
-        criteria = TotalLoss()
+        criteria = TotalLoss().cuda()
 
         train(args, trainLoader, model, criteria, optimizer, epoch)
         # model.eval()
