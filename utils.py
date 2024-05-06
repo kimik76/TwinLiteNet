@@ -185,7 +185,7 @@ def val(val_loader, model):
 
         with torch.no_grad():
             output = model(input_var)
-            output = (resize(output[0], [512, 512]), resize(output[1], [512, 512]))
+            output = (resize(output[0], [512, 1024]), resize(output[1], [512, 1024]))
 
 
         out_da, out_ll = output
