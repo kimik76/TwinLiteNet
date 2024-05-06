@@ -2,7 +2,7 @@ import os
 import sys 
 # put the directory efficientvit instead of '..'
 sys.path.insert(1, os.path.join(sys.path[0], "../efficientvit"))
-from efficientvit.models.utils import build_kwargs_from_config
+# from efficientvit.models.utils import build_kwargs_from_config
 from efficientvit.models.efficientvit.seg import SegHead
 ######
 import torch
