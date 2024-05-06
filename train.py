@@ -118,7 +118,7 @@ def train_net(args):
 
         criteria = TotalLoss()
 
-        train( args, trainLoader, model, criteria, optimizer, epoch)
+        train(args, trainLoader, model, criteria, optimizer, epoch)
         # model.eval()
         # # validation
         # val(valLoader, model)

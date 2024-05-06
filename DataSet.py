@@ -158,12 +158,12 @@ class MyDataset(torch.utils.data.Dataset):
         self.Tensor = transforms.ToTensor()
         self.valid=valid
         if valid:
-            self.root='/kaggle/input/bdd100k-dataset/bdd100k/bdd100k/images/100k/val'
-            # self.root="D:/study/semester4/HybridNets/project/datasets/imgs/val"
+            # self.root='/kaggle/input/bdd100k-dataset/bdd100k/bdd100k/images/100k/val'
+            self.root="D:/study/semester4/HybridNets/project/datasets/imgs/val"
             self.names=os.listdir(self.root)
         else:
-            self.root='/kaggle/input/bdd100k-dataset/bdd100k/bdd100k/images/100k/train'
-            # self.root="D:/study/semester4/HybridNets/project/datasets/imgs/train"
+            # self.root='/kaggle/input/bdd100k-dataset/bdd100k/bdd100k/images/100k/train'
+            self.root="D:/study/semester4/HybridNets/project/datasets/imgs/train"
             self.names=os.listdir(self.root)#[:1000]
 
     def __len__(self):
@@ -180,10 +180,10 @@ class MyDataset(torch.utils.data.Dataset):
         image_name=os.path.join(self.root,self.names[idx])
 
         image = cv2.imread(image_name)
-        label1 = cv2.imread(image_name.replace("input/bdd100k-dataset/bdd100k/bdd100k/images/100k","working/labels/bdd_seg_gt").replace("jpg","png"), 0)
-        label2 = cv2.imread(image_name.replace("input/bdd100k-dataset/bdd100k/bdd100k/images/100k","working/labels/bdd_lane_gt").replace("jpg","png"), 0)
-        # label1 = cv2.imread(image_name.replace("imgs","da_seg_annot").replace("jpg", "png"), 0)
-        # label2 = cv2.imread(image_name.replace("imgs","ll_seg_annot").replace("jpg","png"), 0)
+        # label1 = cv2.imread(image_name.replace("input/bdd100k-dataset/bdd100k/bdd100k/images/100k","working/labels/bdd_seg_gt").replace("jpg","png"), 0)
+        # label2 = cv2.imread(image_name.replace("input/bdd100k-dataset/bdd100k/bdd100k/images/100k","working/labels/bdd_lane_gt").replace("jpg","png"), 0)
+        label1 = cv2.imread(image_name.replace("imgs","da_seg_annot").replace("jpg", "png"), 0)
+        label2 = cv2.imread(image_name.replace("imgs","ll_seg_annot").replace("jpg","png"), 0)
         if not self.valid:
             if random.random()<0.5:
                 combination = (image, label1, label2)
