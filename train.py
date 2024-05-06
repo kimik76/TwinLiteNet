@@ -111,10 +111,10 @@ def train_net(args):
         # train for one epoch
         model.train()
 
-        model.head1 = head
-        model.head2 = head
-        for param in model.backbone.parameters():
-            param.requires_grad = False
+        # model.head1 = head
+        # model.head2 = head
+        # for param in model.backbone.parameters():
+        #     param.requires_grad = False
 
         criteria = TotalLoss()
 
