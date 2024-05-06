@@ -119,7 +119,7 @@ def train(args, train_loader, model, criterion, optimizer, epoch):
     for i, (_,input, target) in pbar:
         if args.onGPU == True:
             input = input.cuda().float()
-        print(f"input {input.device}, model {model.device}")
+        # print(f"input {input.device}, model {model.device}")
         output = model(input)
         output = (resize(output[0],[512, 1024]), resize(output[1],[512, 1024]))
         target=target.cuda()
