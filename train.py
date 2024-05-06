@@ -103,6 +103,7 @@ def train_net(args):
     for epoch in range(start_epoch, args.max_epochs):
 
         model_file_name = args.savedir + os.sep + 'model_{}.pth'.format(epoch)
+        checkpoint_file_name = args.savedir + os.sep + 'checkpoint_{}.pth.tar'.format(epoch)
         poly_lr_scheduler(args, optimizer, epoch)
         for param_group in optimizer.param_groups:
             lr = param_group['lr']
@@ -111,10 +112,10 @@ def train_net(args):
         # train for one epoch
         model.train()
 
-        # model.head1 = head
-        # model.head2 = head
-        # for param in model.backbone.parameters():
-        #     param.requires_grad = False
+        model.head1 = head
+        model.head2 = head
+        for param in model.backbone.parameters():
+            param.requires_grad = False
 
         criteria = TotalLoss().cuda()
 
@@ -129,7 +130,7 @@ def train_net(args):
             'state_dict': model.state_dict(),
             'optimizer': optimizer.state_dict(),
             'lr': lr
-        }, args.savedir + 'checkpoint.pth.tar')
+        }, checkpoint_file_name)
 
         
 
