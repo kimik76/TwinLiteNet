@@ -118,7 +118,8 @@ def train(args, train_loader, model, criterion, optimizer, epoch):
     pbar = tqdm(pbar, total=total_batches, bar_format='{l_bar}{bar:10}{r_bar}')
     for i, (_,input, target) in pbar:
         if args.onGPU == True:
-            input = input.cuda().float()   
+            input = input.cuda().float()
+        print(f"input {input.device}, model {model.device}")
         output = model(input)
         output = (resize(output[0],[512, 1024]), resize(output[1],[512, 1024]))
         target=target.cuda()
